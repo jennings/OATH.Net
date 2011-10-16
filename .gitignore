@@ -1,0 +1,43 @@
+# VISUAL STUDIO FILES
+
+*.user
+*.sln.docstates
+*.suo
+*.vspscc
+
+
+# BUILD ARTIFACTS
+
+[Bb]in/
+[Oo]bj/
+[Aa]pp_[Dd]ata/
+
+*.aps
+*.cache
+*.exe
+*.ilk
+*.lib
+*.log
+*.ncb
+*.obj
+*.pch
+*.pdb
+*.sbr
+*.tlb
+*.tlh
+
+*_i.c
+*_p.c
+
+
+# MISCELLANEOUS
+
+_[Rr]e[Ss]harper*/
+[Tt]est[Rr]esult*
+[Ss]tyle[Cc]op.[Cc]ache
+
+*.VisualState.xml
+
+*.chw
+
+Thumbs.db
