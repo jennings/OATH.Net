@@ -41,14 +41,8 @@ namespace OathNet
         {
             var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             var span = time.ToUniversalTime() - unixEpoch;
-            var spanSeconds = Convert.ToInt32(span.TotalSeconds);
-            var steps = spanSeconds / 30;
-            var stepString = steps.ToString();
-
-            while (stepString.Length < 16)
-            {
-                stepString = "0" + stepString;
-            }
+            var steps = (int)(span.TotalSeconds / 30);
+            var stepString = steps.ToString("X16");
 
             var counter = stepString.HexStringToByteArray();
 
@@ -64,12 +58,7 @@ namespace OathNet
 
             var otp = binary % TimeBasedOtp.digits[this.otpLength];
 
-            var result = otp.ToString();
-
-            while (result.Length < this.otpLength)
-            {
-                result = "0" + result;
-            }
+            var result = otp.ToString("D" + this.otpLength.ToString());
 
             return result;
         }
