@@ -175,7 +175,6 @@ namespace OathNet.Test
 
             var result = this.TestWithStringKey(str, 6, dateTime);
             Assert.AreEqual(expected, result);
-
         }
 
         [Test]
@@ -188,7 +187,6 @@ namespace OathNet.Test
 
             var result = this.TestWithStringKey(str, 6, dateTime);
             Assert.AreEqual(expected, result);
-
         }
 
         private string TestWithByteArrayKey(byte[] key, int digits, DateTime dt)
