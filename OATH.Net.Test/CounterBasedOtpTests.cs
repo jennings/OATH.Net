@@ -245,6 +245,30 @@ namespace OathNet.Test
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
+        public void ComputeOtp_test_with_Google_Authenticator_1()
+        {
+            var str = "DEADBEEF48656C6C6F21"; // Base-32: 32W3532IMVWGY3ZB
+
+            var counter = 1;
+            var expected = "092093";
+
+            var result = this.TestWithStringKey(str, 6, counter);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void ComputeOtp_test_with_Google_Authenticator_2()
+        {
+            var str = "DEADBEEF48656C6C6F21"; // Base-32: 32W3532IMVWGY3ZB
+
+            var counter = 11;
+            var expected = "266262";
+
+            var result = this.TestWithStringKey(str, 6, counter);
+            Assert.AreEqual(expected, result);
+        }
+
         private string TestWithByteArrayKey(byte[] key, int digits, int counter)
         {
             var otp = new CounterBasedOtp(key, digits);
