@@ -37,7 +37,13 @@ namespace OathNet
             this.otpLength = otpLength;
         }
 
-        public virtual string ComputeOtp(DateTime time)
+        public TimeBasedOtp(string secretKeyHex, int otpLength)
+        {
+            this.secretKey = secretKeyHex.HexStringToByteArray();
+            this.otpLength = otpLength;
+        }
+
+        public string ComputeOtp(DateTime time)
         {
             var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             var span = time.ToUniversalTime() - unixEpoch;
