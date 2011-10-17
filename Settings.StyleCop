@@ -1,13 +1,7 @@
 <StyleCopSettings Version="4.3">
   <Analyzers>
     <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.DocumentationRules">
-      <Rules>
-        <Rule Name="ElementsMustBeDocumented">
-          <RuleSettings>
-            <BooleanProperty Name="Enabled">False</BooleanProperty>
-          </RuleSettings>
-        </Rule>
-      </Rules>
+      <Rules/>
       <AnalyzerSettings>
         <StringProperty Name="CompanyName">Stephen Jennings</StringProperty>
         <StringProperty Name="Copyright">Copyright 2011 Stephen Jennings. Licensed under the Apache License, Version 2.0.</StringProperty>

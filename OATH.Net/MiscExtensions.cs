@@ -10,8 +10,16 @@ namespace OathNet
     using System.Globalization;
     using System.Linq;
 
+    /// <summary>
+    ///     A collection of miscellaneous extension methods.
+    /// </summary>
     public static class MiscExtensions
     {
+        /// <summary>
+        ///     Converts a hexadecimal string to a byte array.
+        /// </summary>
+        /// <param name="s">The hexadecimal string.</param>
+        /// <returns>A byte array representing the given string.</returns>
         public static byte[] HexStringToByteArray(this string s)
         {
             return Enumerable.Range(0, s.Length - 1)
