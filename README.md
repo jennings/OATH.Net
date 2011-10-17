@@ -9,9 +9,30 @@ OATH.Net is a .NET library to perform OATH authentication.
 * Microsoft .NET Framework 4.0
 
 
-## Install
+## Usage
 
-TODO
+    public bool AuthorizedWithHOTP(string userSuppliedCode, User user)
+    {
+        string secretKey = user.SecretKey;
+        int otpDigits = 8;
+        int counterValue = user.NextCounterValue();
+
+        CounterBasedOtp otp = new CounterBasedOtp(secretKey, otpDigits);
+        string validCode = otp.ComputeOtp(counterValue);
+
+        return userSuppliedCode == validCode;
+    }
+
+    public bool AuthorizedWithTOTP(string userSuppliedCode, User user)
+    {
+        string secretKey = user.SecretKey;
+        int otpDigits = 8;
+
+        TimeBasedOtp otp = new TimeBasedOtp(secretKey, otpDigits);
+        string validCode = otp.ComputeOtp(DateTime.UtcNow);
+
+        return userSuppliedCode == validCode;
+    }
 
 
 ## Source Code
