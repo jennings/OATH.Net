@@ -16,269 +16,64 @@ namespace OathNet.Test
     public class CounterBasedOtpTests
     {
         [Test]
-        public void Authorize_returns_same_result_as_reference_0_with_bytearray_key()
+        public void ComputeOtp_returns_reference_values_with_bytearray_key()
         {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 0;
-            var expected = "755224";
+            var key = new byte[]
+            {
+                0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
+                0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30
+            };
 
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
+            this.TestAndAssert(key, 6, 0, "755224");
+            this.TestAndAssert(key, 6, 1, "287082");
+            this.TestAndAssert(key, 6, 2, "359152");
+            this.TestAndAssert(key, 6, 3, "969429");
+            this.TestAndAssert(key, 6, 4, "338314");
+            this.TestAndAssert(key, 6, 5, "254676");
+            this.TestAndAssert(key, 6, 6, "287922");
+            this.TestAndAssert(key, 6, 7, "162583");
+            this.TestAndAssert(key, 6, 8, "399871");
+            this.TestAndAssert(key, 6, 9, "520489");
         }
 
         [Test]
-        public void Authorize_returns_same_result_as_reference_0_with_string_key()
+        public void ComputeOtp_returns_reference_values_with_string_key()
         {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 0;
-            var expected = "755224";
+            var key = "3132333435363738393031323334353637383930";
 
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_1_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 1;
-            var expected = "287082";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_1_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 1;
-            var expected = "287082";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_2_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 2;
-            var expected = "359152";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_2_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 2;
-            var expected = "359152";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_3_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 3;
-            var expected = "969429";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_3_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 3;
-            var expected = "969429";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_4_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 4;
-            var expected = "338314";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_4_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 4;
-            var expected = "338314";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_5_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 5;
-            var expected = "254676";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_5_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 5;
-            var expected = "254676";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_6_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 6;
-            var expected = "287922";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_6_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 6;
-            var expected = "287922";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_7_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 7;
-            var expected = "162583";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_7_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 7;
-            var expected = "162583";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_8_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 8;
-            var expected = "399871";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_8_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 8;
-            var expected = "399871";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_9_with_bytearray_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var seed = str.HexStringToByteArray();
-            var count = 9;
-            var expected = "520489";
-
-            var result = this.TestWithByteArrayKey(seed, 6, count);
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void Authorize_returns_same_result_as_reference_9_with_string_key()
-        {
-            var str = "3132333435363738393031323334353637383930";
-            var count = 9;
-            var expected = "520489";
-
-            var result = this.TestWithStringKey(str, 6, count);
-            Assert.AreEqual(expected, result);
+            this.TestAndAssert(key, 6, 0, "755224");
+            this.TestAndAssert(key, 6, 1, "287082");
+            this.TestAndAssert(key, 6, 2, "359152");
+            this.TestAndAssert(key, 6, 3, "969429");
+            this.TestAndAssert(key, 6, 4, "338314");
+            this.TestAndAssert(key, 6, 5, "254676");
+            this.TestAndAssert(key, 6, 6, "287922");
+            this.TestAndAssert(key, 6, 7, "162583");
+            this.TestAndAssert(key, 6, 8, "399871");
+            this.TestAndAssert(key, 6, 9, "520489");
         }
 
         [Test]
         public void ComputeOtp_test_with_Google_Authenticator_1()
         {
-            var str = "DEADBEEF48656C6C6F21"; // Base-32: 32W3532IMVWGY3ZB
+            var key = "DEADBEEF48656C6C6F21"; // Base-32: 32W3532IMVWGY3ZB
 
-            var counter = 1;
-            var expected = "092093";
+            this.TestAndAssert(key, 6, 1, "092093");
+            this.TestAndAssert(key, 6, 11, "266262");
+        }
 
-            var result = this.TestWithStringKey(str, 6, counter);
+        private void TestAndAssert(byte[] key, int digits, int counter, string expected)
+        {
+            var otp = new CounterBasedOtp(key, digits);
+            var result = otp.ComputeOtp(counter);
             Assert.AreEqual(expected, result);
         }
 
-        [Test]
-        public void ComputeOtp_test_with_Google_Authenticator_2()
+        private void TestAndAssert(string key, int digits, int counter, string expected)
         {
-            var str = "DEADBEEF48656C6C6F21"; // Base-32: 32W3532IMVWGY3ZB
-
-            var counter = 11;
-            var expected = "266262";
-
-            var result = this.TestWithStringKey(str, 6, counter);
+            var otp = new CounterBasedOtp(key, digits);
+            var result = otp.ComputeOtp(counter);
             Assert.AreEqual(expected, result);
-        }
-
-        private string TestWithByteArrayKey(byte[] key, int digits, int counter)
-        {
-            var otp = new CounterBasedOtp(key, digits);
-            return otp.ComputeOtp(counter);
-        }
-
-        private string TestWithStringKey(string key, int digits, int counter)
-        {
-            var otp = new CounterBasedOtp(key, digits);
-            return otp.ComputeOtp(counter);
         }
     }
 }
