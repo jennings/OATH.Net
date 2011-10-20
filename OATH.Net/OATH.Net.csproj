@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CounterBasedOtp.cs" />
+    <Compile Include="CounterBasedOtpGenerator.cs" />
     <Compile Include="MiscExtensions.cs" />
-    <Compile Include="TimeBasedOtp.cs" />
+    <Compile Include="TimeBasedOtpGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

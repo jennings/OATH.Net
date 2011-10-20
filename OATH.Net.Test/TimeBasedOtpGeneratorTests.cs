@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------------
-// <copyright file="TimeBasedOtpTests.cs" company="Stephen Jennings">
+// <copyright file="TimeBasedOtpGeneratorTests.cs" company="Stephen Jennings">
 //   Copyright 2011 Stephen Jennings. Licensed under the Apache License, Version 2.0.
 // </copyright>
 //------------------------------------------------------------------------------------
@@ -13,10 +13,10 @@ namespace OathNet.Test
     using NUnit.Framework;
     using OathNet;
 
-    public class TimeBasedOtpTests
+    public class TimeBasedOtpGeneratorTests
     {
         [Test]
-        public void ComputeOtp_returns_reference_results_with_bytearray_key()
+        public void GenerateOtp_returns_reference_results_with_bytearray_key()
         {
             var key = new byte[]
             {
@@ -33,7 +33,7 @@ namespace OathNet.Test
         }
 
         [Test]
-        public void ComputeOtp_returns_reference_results_with_string_key()
+        public void GenerateOtp_returns_reference_results_with_string_key()
         {
             var key = "3132333435363738393031323334353637383930";
 
@@ -45,9 +45,8 @@ namespace OathNet.Test
             this.TestAndAssert(key, 8, new DateTime(2603, 10, 11, 11, 33, 20, DateTimeKind.Utc), "65353130");
         }
 
-
         [Test]
-        public void ComputeOtp_test_with_Google_Authenticator_1()
+        public void GenerateOtp_test_with_Google_Authenticator_1()
         {
             var key = "48656C6C6F21DEADBEEF"; // Base-32: JBSWY3DPEHPK3PXP
 
@@ -55,7 +54,7 @@ namespace OathNet.Test
         }
 
         [Test]
-        public void ComputeOtp_test_with_Google_Authenticator_2()
+        public void GenerateOtp_test_with_Google_Authenticator_2()
         {
             var key = "DEADBEEF48656C6C6F21"; // Base-32: 32W3532IMVWGY3ZB
 
@@ -64,15 +63,15 @@ namespace OathNet.Test
 
         private void TestAndAssert(byte[] key, int digits, DateTime time, string expected)
         {
-            var otp = new TimeBasedOtp(key, digits);
-            var result = otp.ComputeOtp(time);
+            var otp = new TimeBasedOtpGenerator(key, digits);
+            var result = otp.GenerateOtp(time);
             Assert.AreEqual(expected, result);
         }
 
         private void TestAndAssert(string key, int digits, DateTime time, string expected)
         {
-            var otp = new TimeBasedOtp(key, digits);
-            var result = otp.ComputeOtp(time);
+            var otp = new TimeBasedOtpGenerator(key, digits);
+            var result = otp.GenerateOtp(time);
             Assert.AreEqual(expected, result);
         }
     }

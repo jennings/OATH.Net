@@ -53,9 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MiscExtensionsTests.cs" />
-    <Compile Include="CounterBasedOtpTests.cs" />
+    <Compile Include="CounterBasedOtpGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimeBasedOtpTests.cs" />
+    <Compile Include="TimeBasedOtpGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

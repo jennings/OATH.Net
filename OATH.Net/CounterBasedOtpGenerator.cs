@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------------
-// <copyright file="CounterBasedOtp.cs" company="Stephen Jennings">
+// <copyright file="CounterBasedOtpGenerator.cs" company="Stephen Jennings">
 //   Copyright 2011 Stephen Jennings. Licensed under the Apache License, Version 2.0.
 // </copyright>
 //------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ namespace OathNet
     ///         bool validCode = userSuppliedCode == expectedCode;
     ///     </code>
     /// </example>
-    public class CounterBasedOtp
+    public class CounterBasedOtpGenerator
     {
         private static int[] digits = new int[]
         { 
@@ -43,37 +43,37 @@ namespace OathNet
         private int otpLength;
 
         /// <summary>
-        ///     Initializes a new instance of the CounterBasedOtp class. This is used
+        ///     Initializes a new instance of the CounterBasedOtpGenerator class. This is used
         ///     when the client and server share a counter value.
         /// </summary>
         /// <param name="secretKey">The secret key.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        public CounterBasedOtp(byte[] secretKey, int otpLength)
+        public CounterBasedOtpGenerator(byte[] secretKey, int otpLength)
         {
             this.secretKey = secretKey;
             this.otpLength = otpLength;
         }
 
         /// <summary>
-        ///     Initializes a new instance of the CounterBasedOtp class. This is used
+        ///     Initializes a new instance of the CounterBasedOtpGenerator class. This is used
         ///     when the client and server share a counter value.
         /// </summary>
         /// <param name="secretKeyHex">The secret key represented as a sequence of hexadecimal digits.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        public CounterBasedOtp(string secretKeyHex, int otpLength)
+        public CounterBasedOtpGenerator(string secretKeyHex, int otpLength)
         {
             this.secretKey = secretKeyHex.HexStringToByteArray();
             this.otpLength = otpLength;
         }
 
         /// <summary>
-        ///     Computes the OTP for the given counter value. The client and server
-        ///     compute this independently and come up with the same result, provided
-        ///     they use the same shared key.
+        ///     Generates the OTP for the given <paramref name="counter"/> value.
+        ///     The client and server compute this independently and come up
+        ///     with the same result, provided they use the same shared key.
         /// </summary>
         /// <param name="counter">The counter value to use.</param>
         /// <returns>The OTP for the given counter value.</returns>
-        public virtual string ComputeOtp(int counter)
+        public virtual string GenerateOtp(int counter)
         {
             var text = new byte[8];
             var hex = counter.ToString("X16");
@@ -89,7 +89,7 @@ namespace OathNet
                          ((hash[offset + 2] & 0xFF) << 8) |
                          (hash[offset + 3] & 0xFF);
 
-            var otp = binary % CounterBasedOtp.digits[this.otpLength];
+            var otp = binary % CounterBasedOtpGenerator.digits[this.otpLength];
 
             var result = otp.ToString("D" + this.otpLength.ToString());
 
