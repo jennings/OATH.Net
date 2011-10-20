@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SHA512HMACAlgorithm.cs" />
+    <Compile Include="SHA256HMACAlgorithm.cs" />
     <Compile Include="CounterBasedOtpGenerator.cs" />
     <Compile Include="IHMACAlgorithm.cs" />
     <Compile Include="MiscExtensions.cs" />

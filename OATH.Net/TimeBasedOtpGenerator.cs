@@ -41,7 +41,7 @@ namespace OathNet
         /// <param name="hmacAlgorithm">The HMAC algorithm to use.</param>
         public TimeBasedOtpGenerator(byte[] secretKey, int otpLength, IHMACAlgorithm hmacAlgorithm)
         {
-            this.counterOtp = new CounterBasedOtpGenerator(secretKey, otpLength);
+            this.counterOtp = new CounterBasedOtpGenerator(secretKey, otpLength, hmacAlgorithm);
         }
 
         /// <summary>
