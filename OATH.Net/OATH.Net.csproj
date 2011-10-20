@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CounterBasedOtpGenerator.cs" />
+    <Compile Include="IHMACAlgorithm.cs" />
     <Compile Include="MiscExtensions.cs" />
+    <Compile Include="SHA1HMACAlgorithm.cs" />
     <Compile Include="TimeBasedOtpGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
