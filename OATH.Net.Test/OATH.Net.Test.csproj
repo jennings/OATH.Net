@@ -55,6 +55,9 @@
     <Compile Include="MiscExtensionsTests.cs" />
     <Compile Include="CounterBasedOtpGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\OATH.Net\Properties\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="TimeBasedOtpGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
