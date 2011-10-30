@@ -12,4 +12,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Unit tests for OATH.Net")]
 
 [assembly: ComVisible(false)]
-[assembly: Guid("3c7b2afb-4217-44df-99ac-f91d5102f25a")]
+[assembly: Guid("43ab7bee-37d4-47db-92e9-cb1576c8269b")]
