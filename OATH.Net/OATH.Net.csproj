@@ -5,8 +5,7 @@
     <VersionMinor>1</VersionMinor>
   </PropertyGroup>
   <PropertyGroup>
-    <GitDescribeCommand>
-      <![CDATA[
+    <GitDescribeCommand><![CDATA[
         public static string ScriptMain()
         {
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo()
@@ -22,8 +21,7 @@
             int length = result.Length;
             return result.Substring(0,length-1);
         }    
-      ]]>
-    </GitDescribeCommand>
+      ]]></GitDescribeCommand>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -65,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Key.cs" />
     <Compile Include="SHA512HMACAlgorithm.cs" />
     <Compile Include="SHA256HMACAlgorithm.cs" />
     <Compile Include="CounterBasedOtpGenerator.cs" />
@@ -81,17 +80,13 @@
   <Import Project="$(MSBuildProjectDirectory)\..\packages\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
   <Target Name="BeforeBuild">
     <Script Language="C#" Code="$(GitDescribeCommand)">
-      <Output TaskParameter="ReturnValue" PropertyName="GitDescribeResult"/>
+      <Output TaskParameter="ReturnValue" PropertyName="GitDescribeResult" />
     </Script>
     <Version BuildType="Automatic" RevisionType="Automatic">
-      <Output TaskParameter="Build" PropertyName="VersionBuild"/>
-      <Output TaskParameter="Revision" PropertyName="VersionRevision"/>
+      <Output TaskParameter="Build" PropertyName="VersionBuild" />
+      <Output TaskParameter="Revision" PropertyName="VersionRevision" />
     </Version>
-    <AssemblyInfo OutputFile="Properties\VersionAssemblyInfo.cs"
-                  CodeLanguage="CS"
-                  AssemblyVersion="$(VersionMajor).$(VersionMinor).0.0"
-                  AssemblyFileVersion="$(VersionMajor).$(VersionMinor).$(VersionBuild).$(VersionRevision)"
-                  AssemblyInformationalVersion="$(GitDescribeResult)"/>
+    <AssemblyInfo OutputFile="Properties\VersionAssemblyInfo.cs" CodeLanguage="CS" AssemblyVersion="$(VersionMajor).$(VersionMinor).0.0" AssemblyFileVersion="$(VersionMajor).$(VersionMinor).$(VersionBuild).$(VersionRevision)" AssemblyInformationalVersion="$(GitDescribeResult)" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
