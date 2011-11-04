@@ -37,7 +37,7 @@ namespace OathNet
             100000000 // 8
         };
 
-        private byte[] secretKey;
+        private Key secretKey;
 
         private int otpLength;
 
@@ -50,7 +50,7 @@ namespace OathNet
         /// <param name="secretKey">The secret key.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
         /// <param name="hmacAlgorithm">The hashing algorithm to use.</param>
-        public CounterBasedOtpGenerator(byte[] secretKey, int otpLength, IHMACAlgorithm hmacAlgorithm)
+        public CounterBasedOtpGenerator(Key secretKey, int otpLength, IHMACAlgorithm hmacAlgorithm)
         {
             this.secretKey = secretKey;
             this.otpLength = otpLength;
@@ -63,31 +63,8 @@ namespace OathNet
         /// </summary>
         /// <param name="secretKeyHex">The secret key represented as a sequence of hexadecimal digits.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        /// <param name="hmacAlgorithm">The hashing algorithm to use.</param>
-        public CounterBasedOtpGenerator(string secretKeyHex, int otpLength, IHMACAlgorithm hmacAlgorithm)
-            : this(secretKeyHex.HexStringToByteArray(), otpLength, hmacAlgorithm)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the CounterBasedOtpGenerator class using the SHA1
-        ///     hashing algorithm. This is used when the client and server share a counter value.
-        /// </summary>
-        /// <param name="secretKey">The secret key.</param>
-        /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        public CounterBasedOtpGenerator(byte[] secretKey, int otpLength)
+        public CounterBasedOtpGenerator(Key secretKey, int otpLength)
             : this(secretKey, otpLength, new SHA1HMACAlgorithm())
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the CounterBasedOtpGenerator class using the SHA1
-        ///     hashing algorithm. This is used when the client and server share a counter value.
-        /// </summary>
-        /// <param name="secretKeyHex">The secret key represented as a sequence of hexadecimal digits.</param>
-        /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        public CounterBasedOtpGenerator(string secretKeyHex, int otpLength)
-            : this(secretKeyHex.HexStringToByteArray(), otpLength, new SHA1HMACAlgorithm())
         {
         }
 
@@ -104,7 +81,7 @@ namespace OathNet
             var hex = counter.ToString("X16");
             text = hex.HexStringToByteArray();
 
-            var hash = this.hmacAlgorithm.ComputeHash(this.secretKey, text);
+            var hash = this.hmacAlgorithm.ComputeHash(this.secretKey.Binary, text);
 
             int offset = hash[hash.Length - 1] & 0xF;
 

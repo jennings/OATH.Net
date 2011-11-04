@@ -21,7 +21,6 @@ namespace OathNet
         /// </summary>
         public Key()
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace OathNet
         /// <summary>
         ///     Gets the key represented as a byte array.
         /// </summary>
-        public byte[] Binary
+        public virtual byte[] Binary
         {
             get
             {
@@ -56,7 +55,7 @@ namespace OathNet
         /// <summary>
         ///     Gets the key represented as base32-encoded string.
         /// </summary>
-        public string Base32
+        public virtual string Base32
         {
             get
             {

@@ -39,7 +39,7 @@ namespace OathNet
         /// <param name="secretKey">The secret key.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
         /// <param name="hmacAlgorithm">The HMAC algorithm to use.</param>
-        public TimeBasedOtpGenerator(byte[] secretKey, int otpLength, IHMACAlgorithm hmacAlgorithm)
+        public TimeBasedOtpGenerator(Key secretKey, int otpLength, IHMACAlgorithm hmacAlgorithm)
         {
             this.counterOtp = new CounterBasedOtpGenerator(secretKey, otpLength, hmacAlgorithm);
         }
@@ -50,37 +50,10 @@ namespace OathNet
         ///     value but the clocks between the two are synchronized within
         ///     reasonable margins of each other.
         /// </summary>
-        /// <param name="secretKeyHex">The secret key represented as a sequence of hexadecimal digits.</param>
-        /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        /// <param name="hmacAlgorithm">The HMAC algorithm to use.</param>
-        public TimeBasedOtpGenerator(string secretKeyHex, int otpLength, IHMACAlgorithm hmacAlgorithm)
-            : this(secretKeyHex.HexStringToByteArray(), otpLength, hmacAlgorithm)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the TimeBasedOtpGenerator class. This
-        ///     is used when the client and server do not share a counter
-        ///     value but the clocks between the two are synchronized within
-        ///     reasonable margins of each other.
-        /// </summary>
         /// <param name="secretKey">The secret key.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        public TimeBasedOtpGenerator(byte[] secretKey, int otpLength)
+        public TimeBasedOtpGenerator(Key secretKey, int otpLength)
             : this(secretKey, otpLength, new SHA1HMACAlgorithm())
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the TimeBasedOtpGenerator class. This
-        ///     is used when the client and server do not share a counter
-        ///     value but the clocks between the two are synchronized within
-        ///     reasonable margins of each other.
-        /// </summary>
-        /// <param name="secretKeyHex">The secret key represented as a sequence of hexadecimal digits.</param>
-        /// <param name="otpLength">The number of digits in the OTP to generate.</param>
-        public TimeBasedOtpGenerator(string secretKeyHex, int otpLength)
-            : this(secretKeyHex.HexStringToByteArray(), otpLength, new SHA1HMACAlgorithm())
         {
         }
 
