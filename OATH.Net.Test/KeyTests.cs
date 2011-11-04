@@ -15,7 +15,7 @@ namespace OathNet.Test
     public class KeyTests
     {
         [Test]
-        public void Key_created_with_binary_returns_same_data_1()
+        public void Key_created_with_binary_returns_correct_binary_1()
         {
             var keyData = new byte[]
             {
@@ -28,7 +28,7 @@ namespace OathNet.Test
         }
 
         [Test]
-        public void Key_created_with_binary_returns_same_data_2()
+        public void Key_created_with_binary_returns_correct_binary_2()
         {
             var keyData = new byte[]
             {

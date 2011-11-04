@@ -16,6 +16,8 @@ namespace OathNet
     /// </summary>
     public class Key
     {
+        private byte[] keyData;
+
         /// <summary>
         ///     Initializes a new instance of the Key class and generates a random key.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OathNet
         /// <param name="data">The key to initialize.</param>
         public Key(byte[] data)
         {
-            throw new NotImplementedException();
+            this.keyData = data;
         }
 
         /// <summary>
@@ -48,7 +50,7 @@ namespace OathNet
         {
             get
             {
-                throw new NotImplementedException();
+                return this.keyData;
             }
         }
 
