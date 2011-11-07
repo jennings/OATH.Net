@@ -61,7 +61,7 @@ namespace OathNet
         ///     Initializes a new instance of the CounterBasedOtpGenerator class.
         ///     This is used when the client and server share a counter value.
         /// </summary>
-        /// <param name="secretKeyHex">The secret key represented as a sequence of hexadecimal digits.</param>
+        /// <param name="secretKey">The secret key.</param>
         /// <param name="otpLength">The number of digits in the OTP to generate.</param>
         public CounterBasedOtpGenerator(Key secretKey, int otpLength)
             : this(secretKey, otpLength, new SHA1HMACAlgorithm())

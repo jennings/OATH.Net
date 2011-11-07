@@ -40,7 +40,7 @@ namespace OathNet
         /// <param name="base32key">The key to initialize.</param>
         public Key(string base32key)
         {
-            throw new NotImplementedException();
+            this.keyData = OathNet.Base32.ToBinary(base32key);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace OathNet
         {
             get
             {
-                throw new NotImplementedException();
+                return OathNet.Base32.ToBase32(this.keyData);
             }
         }
     }

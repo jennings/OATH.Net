@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base32Tests.cs" />
     <Compile Include="KeyTests.cs" />
     <Compile Include="MiscExtensionsTests.cs" />
     <Compile Include="CounterBasedOtpGeneratorTests.cs" />
