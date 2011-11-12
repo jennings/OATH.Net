@@ -25,6 +25,14 @@ namespace OathNet
             "6", "7"
         };
 
+        private static readonly Dictionary<char, byte> AlphabetReverse = new Dictionary<char, byte>
+        {
+            { 'A', 0 }, { 'B', 1 }, { 'C', 2 }, { 'D', 3 }, { 'E', 4 }, { 'F', 5 }, { 'G', 6 }, { 'H', 7 }, { 'I', 8 }, { 'J', 9 },
+            { 'K', 10 }, { 'L', 11 }, { 'M', 12 }, { 'N', 13 }, { 'O', 14 }, { 'P', 15 }, { 'Q', 16 }, { 'R', 17 }, { 'S', 18 }, { 'T', 19 },
+            { 'U', 20 }, { 'V', 21 }, { 'W', 22 }, { 'X', 23 }, { 'Y', 24 }, { 'Z', 25 }, { '2', 26 }, { '3', 27 }, { '4', 28 }, { '5', 29 },
+            { '6', 30 }, { '7', 31 }
+        };
+
         private static readonly char Padding = '=';
 
         /// <summary>
@@ -56,7 +64,59 @@ namespace OathNet
         /// <returns>The data represented by the base-32 string.</returns>
         public static byte[] ToBinary(string base32)
         {
-            throw new NotImplementedException();
+            base32 = base32.ToUpper();
+
+            if (base32.Any(c => !AlphabetReverse.ContainsKey(c) && c != Padding))
+            {
+                throw new ArgumentException("String contains invalid characters.");
+            }
+
+            var fullSegments = base32.Length / 8;
+            var finalSegmentLength = base32.Length % 8;
+            var segments = fullSegments + (finalSegmentLength == 0 ? 0 : 1);
+
+            IEnumerable<byte> result = new byte[0];
+
+            for (int i = 0; i < segments; i++)
+            {
+                var segment = base32.Skip(i * 8).Take(8).ToArray();
+                var slice = Base32.ConvertSegmentToBinary(segment);
+                result = result.Concat(slice);
+            }
+
+            return result.ToArray();
+        }
+
+        private static byte[] ConvertSegmentToBinary(char[] segment)
+        {
+            if (segment.Length != 8)
+            {
+                throw new ArgumentException("Segment must be 8 characters in length.");
+            }
+
+            byte[] result = new byte[5];
+            var s = segment;
+            var bytesCreated = 0;
+            
+            try
+            {
+                result[0] = (byte)(AlphabetReverse[s[0]] << 3 | AlphabetReverse[s[1]] >> 2);
+                bytesCreated = 1;
+                result[1] = (byte)(AlphabetReverse[s[1]] << 6 | AlphabetReverse[s[2]] << 1 | AlphabetReverse[s[3]] >> 4);
+                bytesCreated = 2;
+                result[2] = (byte)(AlphabetReverse[s[3]] << 4 | AlphabetReverse[s[4]] >> 1);
+                bytesCreated = 3;
+                result[3] = (byte)(AlphabetReverse[s[4]] << 7 | AlphabetReverse[s[5]] << 2 | AlphabetReverse[s[6]] >> 3);
+                bytesCreated = 4;
+                result[4] = (byte)(AlphabetReverse[s[6]] << 5 | AlphabetReverse[s[7]]);
+                bytesCreated = 5;
+            }
+            catch (KeyNotFoundException)
+            {
+                Array.Resize(ref result, bytesCreated);
+            }
+
+            return result;
         }
 
         private static string ConvertSegmentToBase32(byte[] segment)
