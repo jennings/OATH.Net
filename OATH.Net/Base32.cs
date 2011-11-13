@@ -89,31 +89,68 @@ namespace OathNet
 
         private static byte[] ConvertSegmentToBinary(char[] segment)
         {
-            if (segment.Length != 8)
+            if (segment.Length > 8)
             {
-                throw new ArgumentException("Segment must be 8 characters in length.");
+                throw new ArgumentException("Segment must be no more than 8 characters in length.");
             }
 
             byte[] result = new byte[5];
             var s = segment;
-            var bytesCreated = 0;
-            
-            try
+
+            // Find the length of the segment, up to the first padding
+            // If no padding is found, use the entire segment
+            var length = Array.FindIndex(segment, c => c == Padding);
+            if (length == -1)
             {
-                result[0] = (byte)(AlphabetReverse[s[0]] << 3 | AlphabetReverse[s[1]] >> 2);
-                bytesCreated = 1;
-                result[1] = (byte)(AlphabetReverse[s[1]] << 6 | AlphabetReverse[s[2]] << 1 | AlphabetReverse[s[3]] >> 4);
-                bytesCreated = 2;
-                result[2] = (byte)(AlphabetReverse[s[3]] << 4 | AlphabetReverse[s[4]] >> 1);
-                bytesCreated = 3;
-                result[3] = (byte)(AlphabetReverse[s[4]] << 7 | AlphabetReverse[s[5]] << 2 | AlphabetReverse[s[6]] >> 3);
-                bytesCreated = 4;
-                result[4] = (byte)(AlphabetReverse[s[6]] << 5 | AlphabetReverse[s[7]]);
-                bytesCreated = 5;
+                length = segment.Length;
             }
-            catch (KeyNotFoundException)
+
+            var resized = false;
+
+            switch (length)
             {
-                Array.Resize(ref result, bytesCreated);
+                case 8:
+                    resized = true;
+                    result[4] = (byte)(AlphabetReverse[s[6]] << 5 | AlphabetReverse[s[7]]);
+                    goto case 7;
+                case 7:
+                    if (!resized)
+                    {
+                        Array.Resize(ref result, 4);
+                        resized = true;
+                    }
+
+                    result[3] = (byte)(AlphabetReverse[s[4]] << 7 | AlphabetReverse[s[5]] << 2 | AlphabetReverse[s[6]] >> 3);
+                    goto case 5;
+                case 5:
+                    if (!resized)
+                    {
+                        Array.Resize(ref result, 3);
+                        resized = true;
+                    }
+
+                    result[2] = (byte)(AlphabetReverse[s[3]] << 4 | AlphabetReverse[s[4]] >> 1);
+                    goto case 4;
+                case 4:
+                    if (!resized)
+                    {
+                        Array.Resize(ref result, 2);
+                        resized = true;
+                    }
+
+                    result[1] = (byte)(AlphabetReverse[s[1]] << 6 | AlphabetReverse[s[2]] << 1 | AlphabetReverse[s[3]] >> 4);
+                    goto case 2;
+                case 2:
+                    if (!resized)
+                    {
+                        Array.Resize(ref result, 1);
+                        resized = true;
+                    }
+
+                    result[0] = (byte)(AlphabetReverse[s[0]] << 3 | AlphabetReverse[s[1]] >> 2);
+                    break;
+                default:
+                    throw new ArgumentException("Segment is not a valid 8 character block of base32.");
             }
 
             return result;
