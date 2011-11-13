@@ -29,6 +29,8 @@ namespace OathNet
         /// <summary>
         ///     Initializes a new instance of the Key class and generates a random key with the specified seed.
         /// </summary>
+        /// <param name="keyLength">Length in bytes of the generated key.</param>
+        /// <param name="seed">A seed to use for the random key generation.</param>
         public Key(int keyLength, int seed)
         {
             this.keyData = new byte[keyLength];
@@ -49,6 +51,7 @@ namespace OathNet
         ///     Initializes a new instance of the Key class.
         /// </summary>
         /// <param name="base32key">The key to initialize.</param>
+        /// <exception cref="ArgumentException">base32key is not a valid base32-encoded string.</exception>
         public Key(string base32key)
         {
             this.keyData = OathNet.Base32.ToBinary(base32key);

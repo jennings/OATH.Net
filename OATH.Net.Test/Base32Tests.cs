@@ -293,5 +293,23 @@ namespace OathNet.Test
 
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void ToBinary_with_invalid_string_throws_ArgumentException()
+        {
+            var invalidChars = new List<string>()
+            { 
+                "1", "8", "9", "0",
+                "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+",
+                "[", "]", "{", "}", "|", "\\",
+                ";", ":", "'", "\"",
+                ",", ".", "<", ">", "/", "?"
+            };
+
+            foreach (var s in invalidChars)
+            {
+                Assert.Throws<ArgumentException>(() => new Key("ABCD" + s + "EFG"), "'" + s + "' is not part of the alphabet");
+            }
+        }
     }
 }

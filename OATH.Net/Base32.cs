@@ -17,20 +17,12 @@ namespace OathNet
     /// </summary>
     public static class Base32
     {
-        private static readonly string[] Alphabet = new string[]
+        private static readonly char[] Alphabet = new char[]
         {
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-            "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-            "U", "V", "W", "X", "Y", "Z", "2", "3", "4", "5",
-            "6", "7"
-        };
-
-        private static readonly Dictionary<char, byte> AlphabetReverse = new Dictionary<char, byte>
-        {
-            { 'A', 0 }, { 'B', 1 }, { 'C', 2 }, { 'D', 3 }, { 'E', 4 }, { 'F', 5 }, { 'G', 6 }, { 'H', 7 }, { 'I', 8 }, { 'J', 9 },
-            { 'K', 10 }, { 'L', 11 }, { 'M', 12 }, { 'N', 13 }, { 'O', 14 }, { 'P', 15 }, { 'Q', 16 }, { 'R', 17 }, { 'S', 18 }, { 'T', 19 },
-            { 'U', 20 }, { 'V', 21 }, { 'W', 22 }, { 'X', 23 }, { 'Y', 24 }, { 'Z', 25 }, { '2', 26 }, { '3', 27 }, { '4', 28 }, { '5', 29 },
-            { '6', 30 }, { '7', 31 }
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+            'U', 'V', 'W', 'X', 'Y', 'Z', '2', '3', '4', '5',
+            '6', '7'
         };
 
         private static readonly char Padding = '=';
@@ -62,11 +54,12 @@ namespace OathNet
         /// </summary>
         /// <param name="base32">A base-32 encoded string.</param>
         /// <returns>The data represented by the base-32 string.</returns>
+        /// <exception cref="ArgumentException">The argument is not a valid base32-encoded string.</exception>
         public static byte[] ToBinary(string base32)
         {
             base32 = base32.ToUpper();
 
-            if (base32.Any(c => !AlphabetReverse.ContainsKey(c) && c != Padding))
+            if (base32.Any(c => !Alphabet.Contains(c) && c != Padding))
             {
                 throw new ArgumentException("String contains invalid characters.");
             }
@@ -111,7 +104,7 @@ namespace OathNet
             {
                 case 8:
                     resized = true;
-                    result[4] = (byte)(AlphabetReverse[s[6]] << 5 | AlphabetReverse[s[7]]);
+                    result[4] = (byte)(Array.IndexOf(Alphabet, s[6]) << 5 | Array.IndexOf(Alphabet, s[7]));
                     goto case 7;
                 case 7:
                     if (!resized)
@@ -120,7 +113,7 @@ namespace OathNet
                         resized = true;
                     }
 
-                    result[3] = (byte)(AlphabetReverse[s[4]] << 7 | AlphabetReverse[s[5]] << 2 | AlphabetReverse[s[6]] >> 3);
+                    result[3] = (byte)(Array.IndexOf(Alphabet, s[4]) << 7 | Array.IndexOf(Alphabet, s[5]) << 2 | Array.IndexOf(Alphabet, s[6]) >> 3);
                     goto case 5;
                 case 5:
                     if (!resized)
@@ -129,7 +122,7 @@ namespace OathNet
                         resized = true;
                     }
 
-                    result[2] = (byte)(AlphabetReverse[s[3]] << 4 | AlphabetReverse[s[4]] >> 1);
+                    result[2] = (byte)(Array.IndexOf(Alphabet, s[3]) << 4 | Array.IndexOf(Alphabet, s[4]) >> 1);
                     goto case 4;
                 case 4:
                     if (!resized)
@@ -138,7 +131,7 @@ namespace OathNet
                         resized = true;
                     }
 
-                    result[1] = (byte)(AlphabetReverse[s[1]] << 6 | AlphabetReverse[s[2]] << 1 | AlphabetReverse[s[3]] >> 4);
+                    result[1] = (byte)(Array.IndexOf(Alphabet, s[1]) << 6 | Array.IndexOf(Alphabet, s[2]) << 1 | Array.IndexOf(Alphabet, s[3]) >> 4);
                     goto case 2;
                 case 2:
                     if (!resized)
@@ -147,7 +140,7 @@ namespace OathNet
                         resized = true;
                     }
 
-                    result[0] = (byte)(AlphabetReverse[s[0]] << 3 | AlphabetReverse[s[1]] >> 2);
+                    result[0] = (byte)(Array.IndexOf(Alphabet, s[0]) << 3 | Array.IndexOf(Alphabet, s[1]) >> 2);
                     break;
                 default:
                     throw new ArgumentException("Segment is not a valid 8 character block of base32.");
