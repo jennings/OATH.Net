@@ -77,9 +77,19 @@ namespace OathNet
         /// <returns>The OTP for the given counter value.</returns>
         public virtual string GenerateOtp(int counter)
         {
-            var text = new byte[8];
-            var hex = counter.ToString("X16");
-            text = hex.HexStringToByteArray();
+            var text = BitConverter.GetBytes(counter);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Resize(ref text, 8);      // text = { 04, 03, 02, 01, 00, 00, 00, 00 }
+                Array.Reverse(text);            // text = { 00, 00, 00, 00, 01, 02, 03, 04 }
+            }
+            else
+            {
+                Array.Reverse(text);            // text = { 04, 03, 02, 01 }
+                Array.Resize(ref text, 8);      // text = { 04, 03, 02, 01, 00, 00, 00, 00 }
+                Array.Reverse(text);            // text = { 00, 00, 00, 00, 01, 02, 03, 04 }
+            }
 
             var hash = this.hmacAlgorithm.ComputeHash(this.secretKey.Binary, text);
 
