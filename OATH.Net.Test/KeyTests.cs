@@ -125,5 +125,27 @@ namespace OathNet.Test
 
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void Key_created_with_seed_returns_expected_key_data_1()
+        {
+            var seed = 870273;
+            var key = new Key(10, seed);
+            var actual = key.Base32;
+            var expected = "YLFDZHEU5CHZ3KDB";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Key_created_with_seed_returns_expected_key_data_2()
+        {
+            var seed = 20572632;
+            var key = new Key(8, seed);
+            var actual = key.Base32;
+            var expected = "OI7GKIQ7K63GS===";
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

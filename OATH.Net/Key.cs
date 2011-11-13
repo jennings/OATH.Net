@@ -19,10 +19,21 @@ namespace OathNet
         private byte[] keyData;
 
         /// <summary>
-        ///     Initializes a new instance of the Key class and generates a random key.
+        ///     Initializes a new instance of the Key class and generates a random 10-byte key.
         /// </summary>
         public Key()
+            : this(10, (new Random()).Next())
         {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the Key class and generates a random key with the specified seed.
+        /// </summary>
+        public Key(int keyLength, int seed)
+        {
+            this.keyData = new byte[keyLength];
+            var gen = new Random(seed);
+            gen.NextBytes(this.keyData);
         }
 
         /// <summary>
