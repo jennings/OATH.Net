@@ -17,7 +17,8 @@ OATH.Net is a .NET library to perform OATH authentication.
         int otpDigits = 8;
         int counterValue = user.NextCounterValue();
 
-        CounterBasedOtp otp = new CounterBasedOtp(secretKey, otpDigits);
+        Key key = new Key(secretKey);
+        CounterBasedOtpGenerator otp = new CounterBasedOtpGenerator(key, otpDigits);
         string validCode = otp.ComputeOtp(counterValue);
 
         return userSuppliedCode == validCode;
@@ -28,7 +29,8 @@ OATH.Net is a .NET library to perform OATH authentication.
         string secretKey = user.SecretKey;
         int otpDigits = 8;
 
-        TimeBasedOtp otp = new TimeBasedOtp(secretKey, otpDigits);
+        Key key = new Key(secretKey);
+        TimeBasedOtpGenerator otp = new TimeBasedOtpGenerator(key, otpDigits);
         string validCode = otp.ComputeOtp(DateTime.UtcNow);
 
         return userSuppliedCode == validCode;
