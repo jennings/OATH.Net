@@ -2,13 +2,19 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- $Id: MSBuild.Community.Tasks.Targets 303 2007-02-23 15:49:46Z pwelter34 $ -->
 
+  <!--
   <PropertyGroup>
     <MSBuildCommunityTasksPath Condition="'$(MSBuildCommunityTasksPath)' == ''">$(MSBuildExtensionsPath)\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
     <MSBuildCommunityTasksLib>$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLib>
   </PropertyGroup>
+  -->
+
+  <PropertyGroup>
+    <MSBuildCommunityTasksLib>.\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLib>
+  </PropertyGroup>
 
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.AspNet.InstallAspNet" />
-  
+
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.AssemblyInfo" />
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.Attrib" />
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.SqlExecute" />
@@ -53,7 +59,7 @@
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.Schema.TaskSchema" />
 
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.SqlServer.ExecuteDDL" />
-	
+
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.SourceSafe.VssAdd" />
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.SourceSafe.VssCheckin" />
   <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.SourceSafe.VssCheckout" />
