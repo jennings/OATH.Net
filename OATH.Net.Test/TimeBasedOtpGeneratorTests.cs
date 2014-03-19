@@ -148,21 +148,21 @@ namespace OathNet.Test
 
         private void TestSHA1AndAssert(Key key, int digits, DateTime time, string expected)
         {
-            var otp = new TimeBasedOtpGenerator(key, digits, new SHA1HMACAlgorithm());
+            var otp = new TimeBasedOtpGenerator(key, digits, 30, new SHA1HMACAlgorithm());
             var result = otp.GenerateOtp(time);
             Assert.AreEqual(expected, result);
         }
 
         private void TestSHA256AndAssert(Key key, int digits, DateTime time, string expected)
         {
-            var otp = new TimeBasedOtpGenerator(key, digits, new SHA256HMACAlgorithm());
+            var otp = new TimeBasedOtpGenerator(key, digits, 30, new SHA256HMACAlgorithm());
             var result = otp.GenerateOtp(time);
             Assert.AreEqual(expected, result);
         }
 
         private void TestSHA512AndAssert(Key key, int digits, DateTime time, string expected)
         {
-            var otp = new TimeBasedOtpGenerator(key, digits, new SHA512HMACAlgorithm());
+            var otp = new TimeBasedOtpGenerator(key, digits, 30, new SHA512HMACAlgorithm());
             var result = otp.GenerateOtp(time);
             Assert.AreEqual(expected, result);
         }
