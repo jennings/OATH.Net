@@ -137,6 +137,52 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 6, new DateTime(2011, 10, 17, 7, 52, 0, DateTimeKind.Utc), "139594");
         }
 
+        [Test]
+        public void ValidateOtp_test_validates_within_60_second_validity_period()
+        {
+            keyMock.Setup(k => k.Binary).Returns(binaryForSha1ReferenceKey);
+            var generator = new TimeBasedOtpGenerator(key, 8);
+            var currentTime = new DateTime(2009, 2, 13, 23, 31, 30, DateTimeKind.Utc);
+            var sixtySeconds = TimeSpan.FromSeconds(60);
+            Assert.IsFalse(generator.ValidateOtp("89005924", currentTime.AddSeconds(-90), sixtySeconds), "90 seconds prior should be invalid");
+            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(-60), sixtySeconds), "60 seconds prior should be valid");
+            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(-15), sixtySeconds), "15 seconds prior should be valid");
+            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(+00), sixtySeconds), "The exact time should be valid");
+            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(+15), sixtySeconds), "15 seconds after should be valid");
+            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(+60), sixtySeconds), "60 seconds after should be valid");
+            Assert.IsFalse(generator.ValidateOtp("89005924", currentTime.AddSeconds(+90), sixtySeconds), "90 seconds after should be invalid");
+        }
+
+        [Test]
+        public void ValidateOtp_test_validates_within_50_second_validity_period()
+        {
+            keyMock.Setup(k => k.Binary).Returns(binaryForSha1ReferenceKey);
+            var generator = new TimeBasedOtpGenerator(key, 8);
+            var currentTime = new DateTime(2033, 5, 18, 3, 33, 20, DateTimeKind.Utc);
+            var fiftySeconds = TimeSpan.FromSeconds(50);
+            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(-90), fiftySeconds), "90 seconds prior should be invalid");
+            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(-60), fiftySeconds), "60 seconds prior should be invalid");
+            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(-30), fiftySeconds), "30 seconds prior should be valid");
+            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+00), fiftySeconds), "The exact time should be valid");
+            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+30), fiftySeconds), "30 seconds after should be valid");
+            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(+60), fiftySeconds), "60 seconds after should be invalid");
+            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(+90), fiftySeconds), "90 seconds after should be invalid");
+        }
+
+        [Test]
+        public void ValidateOtp_test_validates_with_an_empty_validity_period()
+        {
+            keyMock.Setup(k => k.Binary).Returns(binaryForSha1ReferenceKey);
+            var generator = new TimeBasedOtpGenerator(key, 8);
+            var currentTime = new DateTime(2033, 5, 18, 3, 33, 20, DateTimeKind.Utc);
+            var zeroSeconds = TimeSpan.FromSeconds(0);
+            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(-30), zeroSeconds), "30 seconds prior should be invalid");
+            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(-01), zeroSeconds), "1 second prior should be valid (due to a 30-second precision)");
+            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+00), zeroSeconds), "The exact time should be valid");
+            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+01), zeroSeconds), "1 seconds after should be valid (due to a 30-second precision)");
+            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(+30), zeroSeconds), "30 seconds after should be invalid");
+        }
+
         private string GetOtpWithImplicitHMAC(Key key, int digits, DateTime time)
         {
             var otp = new TimeBasedOtpGenerator(key, digits);

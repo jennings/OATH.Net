@@ -28,6 +28,7 @@ namespace OathNet
     /// </example>
     public class TimeBasedOtpGenerator
     {
+        private static readonly TimeSpan DefaultValidityPeriod = TimeSpan.FromSeconds(60);
         private CounterBasedOtpGenerator counterOtp;
 
         /// <summary>
@@ -71,6 +72,44 @@ namespace OathNet
             var steps = (int)(span.TotalSeconds / 30);
 
             return this.counterOtp.GenerateOtp(steps);
+        }
+
+        /// <summary>
+        /// Validates a given OTP. A default validity period of 60 seconds is used.
+        /// </summary>
+        /// <param name="providedOtp">The OTP provided by the user attempting authentication.</param>
+        /// <param name="currentTime">The time at which the given OTP should be valid.</param>
+        /// <returns>True if the provided OTP is valid, otherwise false.</returns>
+        public bool ValidateOtp(string providedOtp, DateTime currentTime)
+        {
+            return this.ValidateOtp(providedOtp, currentTime, DefaultValidityPeriod);
+        }
+
+        /// <summary>
+        /// Validates a given OTP using the provided validity period.
+        /// </summary>
+        /// <param name="providedOtp">The OTP provided by the user attempting authentication.</param>
+        /// <param name="currentTime">The time at which the given OTP should be valid.</param>
+        /// <param name="validityPeriod">The interval of time in which the provided OTP should be allowed. For example, a validity period of 60 seconds indicates the code generated at 6:41 PM should still be valid at 6:40 PM and 6:42 PM. This helps accomodate for inaccurately-set clocks.</param>
+        /// <returns>True if the provided OTP is valid, otherwise false.</returns>
+        public bool ValidateOtp(string providedOtp, DateTime currentTime, TimeSpan validityPeriod)
+        {
+            var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var span = currentTime.ToUniversalTime() - unixEpoch;
+            var steps = (int)(span.TotalSeconds / 30);
+            var interval = (int)(Math.Abs(validityPeriod.TotalSeconds) / 30);
+            var minSteps = steps - interval;
+            var maxSteps = steps + interval;
+
+            for (int step = minSteps; step <= maxSteps; step++)
+            {
+                if (this.counterOtp.GenerateOtp(step).Equals(providedOtp, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

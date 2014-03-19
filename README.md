@@ -11,17 +11,18 @@ OATH.Net is a .NET library to perform OATH authentication.
 
 ## Usage
 
-    public bool AuthorizedWithHOTP(string userSuppliedCode, User user)
+Add to your project with "`Install-Package OATH.Net`".
+
+    // Time-based OTP
+
+    public bool CreateTOTPCode(User user)
     {
         string secretKey = user.SecretKey;
         int otpDigits = 8;
-        int counterValue = user.NextCounterValue();
 
         Key key = new Key(secretKey);
-        CounterBasedOtpGenerator otp = new CounterBasedOtpGenerator(key, otpDigits);
-        string validCode = otp.ComputeOtp(counterValue);
-
-        return userSuppliedCode == validCode;
+        TimeBasedOtpGenerator otp = new TimeBasedOtpGenerator(key, otpDigits);
+        return otp.GenerateOtp(DateTime.UtcNow);
     }
 
     public bool AuthorizedWithTOTP(string userSuppliedCode, User user)
@@ -31,7 +32,21 @@ OATH.Net is a .NET library to perform OATH authentication.
 
         Key key = new Key(secretKey);
         TimeBasedOtpGenerator otp = new TimeBasedOtpGenerator(key, otpDigits);
-        string validCode = otp.ComputeOtp(DateTime.UtcNow);
+        return otp.ValidateOtp(userSuppliedCode, DateTime.UtcNow);
+    }
+
+
+    // Counter-based OTP
+
+    public bool AuthorizedWithHOTP(string userSuppliedCode, User user)
+    {
+        string secretKey = user.SecretKey;
+        int otpDigits = 8;
+        int counterValue = user.NextCounterValue();
+
+        Key key = new Key(secretKey);
+        CounterBasedOtpGenerator otp = new CounterBasedOtpGenerator(key, otpDigits);
+        string validCode = otp.ComputeOtp(counterValue);
 
         return userSuppliedCode == validCode;
     }
