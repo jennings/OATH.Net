@@ -75,7 +75,7 @@ namespace OathNet
         /// </summary>
         /// <param name="counter">The counter value to use.</param>
         /// <returns>The OTP for the given counter value.</returns>
-        public virtual string GenerateOtp(int counter)
+        public virtual string GenerateOtp(long counter)
         {
             var text = BitConverter.GetBytes(counter);
 
