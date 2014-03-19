@@ -2,15 +2,14 @@
 <package >
   <metadata>
     <id>OATH.Net</id>
-    <version>0.1</version>
+    <version>0.2</version>
     <authors>Stephen Jennings</authors>
-    <owners>Stephen Jennings</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/jennings/OATH.Net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Generates time-based and counter-based authentication tokens using the HOTP and TOTP algorithm (compatible with Google Authenticator).</description>
-    <releaseNotes>Initial release</releaseNotes>
-    <copyright>Copyright 2014 Various Contributors</copyright>
+    <releaseNotes>Add a validation method to the TimeBasedOtpGenerator.</releaseNotes>
+    <copyright>Copyright 2011-2014 Various Contributors</copyright>
   </metadata>
   <files>
     <file src="OATH.Net\bin\Release\OATH.Net.dll" target="lib\net40" />

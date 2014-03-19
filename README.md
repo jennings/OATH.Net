@@ -71,7 +71,7 @@ tests and creating NuGet packages. To use Psake:
 
 OATH.Net is on GitHub:
 
-    http://github.com/jennings/OATH.Net
+    https://github.com/jennings/OATH.Net
 
 
 ## License
