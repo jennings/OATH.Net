@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OATH.Net", "OATH.Net\OATH.Net.csproj", "{D3842881-C2F4-44A7-AE51-5BC041B7B2FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OATH.Net.Test", "OATH.Net.Test\OATH.Net.Test.csproj", "{791F063E-3B2A-4082-829E-9363324A90F4}"
