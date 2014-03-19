@@ -62,9 +62,6 @@
     <Compile Include="..\OATH.Net\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\OATH.Net\Properties\VersionAssemblyInfo.cs">
-      <Link>Properties\VersionAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="TimeBasedOtpGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
