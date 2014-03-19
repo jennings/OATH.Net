@@ -20,17 +20,18 @@ Add to your project with "`Install-Package OATH.Net`".
         string secretKey = user.SecretKey;
         int otpDigits = 8;
 
-        Key key = new Key(secretKey);
+        Key key = new Key();         // Generate a new key
+        user.SecretKey = key.Base32; // Persist this for later
+
         TimeBasedOtpGenerator otp = new TimeBasedOtpGenerator(key, otpDigits);
         return otp.GenerateOtp(DateTime.UtcNow);
     }
 
     public bool AuthorizedWithTOTP(string userSuppliedCode, User user)
     {
-        string secretKey = user.SecretKey;
         int otpDigits = 8;
+        Key key = new Key(user.SecretKey);
 
-        Key key = new Key(secretKey);
         TimeBasedOtpGenerator otp = new TimeBasedOtpGenerator(key, otpDigits);
         return otp.ValidateOtp(userSuppliedCode, DateTime.UtcNow);
     }
@@ -40,11 +41,10 @@ Add to your project with "`Install-Package OATH.Net`".
 
     public bool AuthorizedWithHOTP(string userSuppliedCode, User user)
     {
-        string secretKey = user.SecretKey;
         int otpDigits = 8;
         int counterValue = user.NextCounterValue();
+        Key key = new Key(user.SecretKey);
 
-        Key key = new Key(secretKey);
         CounterBasedOtpGenerator otp = new CounterBasedOtpGenerator(key, otpDigits);
         string validCode = otp.ComputeOtp(counterValue);
 
