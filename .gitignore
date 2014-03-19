@@ -13,6 +13,7 @@
 [Aa]pp_[Dd]ata/
 [Pp]ackages/
 
+*.nupkg
 *.aps
 *.cache
 *.ilk
