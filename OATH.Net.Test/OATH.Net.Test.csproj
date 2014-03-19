@@ -73,7 +73,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildProjectDirectory)\..\packages\StyleCop\Microsoft.StyleCop.Targets" />
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
