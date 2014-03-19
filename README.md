@@ -37,6 +37,21 @@ OATH.Net is a .NET library to perform OATH authentication.
     }
 
 
+## Building ##
+
+Visual Studio should build the project correctly with no effort.
+
+A [Psake](https://github.com/psake/psake) build script is included for running
+tests and creating NuGet packages. To use Psake:
+
+1. Open Psake by importing `Psake.psm1` into a PowerShell session, or run
+   `Psake.cmd` to create a session with Psake already imported.
+
+2. Run `Invoke-psake build` to build the project.
+
+3. Run `Invoke-psake test` to run all unit tests.
+
+
 ## Source Code
 
 OATH.Net is on GitHub:
