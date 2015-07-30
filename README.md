@@ -48,7 +48,7 @@ Add to your project with "`Install-Package OATH.Net`".
         Key key = new Key(user.SecretKey);
 
         CounterBasedOtpGenerator otp = new CounterBasedOtpGenerator(key, otpDigits);
-        string validCode = otp.ComputeOtp(counterValue);
+        string validCode = otp.GenerateOtp(counterValue);
 
         return userSuppliedCode == validCode;
     }
