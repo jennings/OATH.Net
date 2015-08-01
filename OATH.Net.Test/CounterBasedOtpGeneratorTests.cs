@@ -24,9 +24,7 @@ namespace OathNet.Test
                 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
                 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30
             };
-            var keyMock = new Mock<Key>();
-            keyMock.Setup(k => k.Binary).Returns(keyData);
-            var key = keyMock.Object;
+            var key = new Key(keyData);
 
             this.TestSHA1AndAssert(key, 6, 0, this.GetOtpWithImplicitHMAC(key, 6, 0));
             this.TestSHA1AndAssert(key, 6, 1, this.GetOtpWithImplicitHMAC(key, 6, 1));
@@ -48,9 +46,7 @@ namespace OathNet.Test
                 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30,
                 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30
             };
-            var keyMock = new Mock<Key>();
-            keyMock.Setup(k => k.Binary).Returns(keyData);
-            var key = keyMock.Object;
+            var key = new Key(keyData);
 
             this.TestSHA1AndAssert(key, 6, 0, "755224");
             this.TestSHA1AndAssert(key, 6, 1, "287082");
@@ -72,9 +68,7 @@ namespace OathNet.Test
                 0xDE, 0xAD, 0xBE, 0xEF, 0x48,
                 0x65, 0x6C, 0x6C, 0x6F, 0x21
             };
-            var keyMock = new Mock<Key>();
-            keyMock.Setup(k => k.Binary).Returns(keyData);
-            var key = keyMock.Object;
+            var key = new Key(keyData);
 
             this.TestSHA1AndAssert(key, 6, 1, "092093");
             this.TestSHA1AndAssert(key, 6, 11, "266262");
