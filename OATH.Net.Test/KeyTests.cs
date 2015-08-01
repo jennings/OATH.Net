@@ -127,28 +127,6 @@ namespace OathNet.Test
         }
 
         [Test]
-        public void Key_created_with_seed_returns_expected_key_data_1()
-        {
-            var seed = 870273;
-            var key = new Key(10, seed);
-            var actual = key.Base32;
-            var expected = "YLFDZHEU5CHZ3KDB";
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void Key_created_with_seed_returns_expected_key_data_2()
-        {
-            var seed = 20572632;
-            var key = new Key(8, seed);
-            var actual = key.Base32;
-            var expected = "OI7GKIQ7K63GS===";
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void Key_created_with_invalid_string_throws_ArgumentException()
         {
             var invalidChars = new List<string>()
@@ -164,6 +142,14 @@ namespace OathNet.Test
             {
                 Assert.Throws<ArgumentException>(() => new Key("ABCD" + s + "EFG"), "'" + s + "' is not part of the alphabet");
             }
+        }
+
+        [Test]
+        public void Key_created_with_parameterless_constructor_is_20_bytes()
+        {
+            var key = new Key();
+            Assert.AreEqual(20, key.Binary.Length);
+            Assert.False(key.Binary.All(b => b == 0), "The key was not generated");
         }
     }
 }
