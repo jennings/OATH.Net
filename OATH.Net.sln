@@ -1,38 +1,48 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OATH.Net", "OATH.Net\OATH.Net.csproj", "{D3842881-C2F4-44A7-AE51-5BC041B7B2FD}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OATH.Net", "OATH.Net\OATH.Net.csproj", "{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OATH.Net.Test", "OATH.Net.Test\OATH.Net.Test.csproj", "{791F063E-3B2A-4082-829E-9363324A90F4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4C63D6DA-A2F5-4711-84AD-1318F3625B3E}"
-	ProjectSection(SolutionItems) = preProject
-		NOTICE.md = NOTICE.md
-		OATH.Net.nuspec = OATH.Net.nuspec
-		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D7006C7B-F53C-419A-B5FB-E90AF78EB7B0}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OATH.Net.Test", "OATH.Net.Test\OATH.Net.Test.csproj", "{18728033-5B69-44EB-868C-0E2CAAD170E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3842881-C2F4-44A7-AE51-5BC041B7B2FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3842881-C2F4-44A7-AE51-5BC041B7B2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3842881-C2F4-44A7-AE51-5BC041B7B2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3842881-C2F4-44A7-AE51-5BC041B7B2FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{791F063E-3B2A-4082-829E-9363324A90F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{791F063E-3B2A-4082-829E-9363324A90F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{791F063E-3B2A-4082-829E-9363324A90F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{791F063E-3B2A-4082-829E-9363324A90F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Debug|x64.Build.0 = Debug|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Release|x64.ActiveCfg = Release|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Release|x64.Build.0 = Release|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA30A345-6285-4F6C-81A8-C0FC2A01A46C}.Release|x86.Build.0 = Release|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Debug|x64.Build.0 = Debug|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Debug|x86.Build.0 = Debug|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Release|x64.ActiveCfg = Release|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Release|x64.Build.0 = Release|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Release|x86.ActiveCfg = Release|Any CPU
+		{18728033-5B69-44EB-868C-0E2CAAD170E7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
