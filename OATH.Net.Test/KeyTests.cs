@@ -10,11 +10,11 @@ namespace OathNet.Test
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using NUnit.Framework;
+    using Xunit;
 
     public class KeyTests
     {
-        [Test]
+        [Fact]
         public void Key_created_with_binary_returns_correct_binary_1()
         {
             var keyData = new byte[]
@@ -25,10 +25,10 @@ namespace OathNet.Test
             var key = new Key(keyData);
             var actual = key.Binary;
 
-            Assert.AreEqual(keyData, actual);
+            Assert.Equal(keyData, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_binary_returns_correct_binary_2()
         {
             var keyData = new byte[]
@@ -41,10 +41,10 @@ namespace OathNet.Test
             var key = new Key(keyData);
             var actual = key.Binary;
 
-            Assert.AreEqual(keyData, actual);
+            Assert.Equal(keyData, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_binary_returns_correct_base32_1()
         {
             var keyData = new byte[]
@@ -57,10 +57,10 @@ namespace OathNet.Test
             var actual = key.Base32;
             var expected = "32W3532IMVWGY3ZB";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_binary_returns_correct_base32_2()
         {
             var keyData = new byte[]
@@ -73,30 +73,30 @@ namespace OathNet.Test
             var actual = key.Base32;
             var expected = "JBSWY3DPEHPK3PXP";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_base32_returns_correct_base32_1()
         {
             var base32 = "32W3532IMVWGY3ZB";
             var key = new Key(base32);
             var actual = key.Base32;
 
-            Assert.AreEqual(base32, actual);
+            Assert.Equal(base32, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_base32_returns_correct_base32_2()
         {
             var base32 = "JBSWY3DPEHPK3PXP";
             var key = new Key(base32);
             var actual = key.Base32;
 
-            Assert.AreEqual(base32, actual);
+            Assert.Equal(base32, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_base32_returns_correct_binary_1()
         {
             var base32 = "32W3532IMVWGY3ZB";
@@ -108,10 +108,10 @@ namespace OathNet.Test
                 0x65, 0x6C, 0x6C, 0x6F, 0x21
             };
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_base32_returns_correct_binary_2()
         {
             var base32 = "JBSWY3DPEHPK3PXP";
@@ -123,14 +123,14 @@ namespace OathNet.Test
                 0x21, 0xDE, 0xAD, 0xBE, 0xEF
             };
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_invalid_string_throws_ArgumentException()
         {
             var invalidChars = new List<string>()
-            { 
+            {
                 "1", "8", "9", "0",
                 "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+",
                 "[", "]", "{", "}", "|", "\\",
@@ -140,15 +140,15 @@ namespace OathNet.Test
 
             foreach (var s in invalidChars)
             {
-                Assert.Throws<ArgumentException>(() => new Key("ABCD" + s + "EFG"), "'" + s + "' is not part of the alphabet");
+                Assert.Throws<ArgumentException>(() => new Key("ABCD" + s + "EFG"));
             }
         }
 
-        [Test]
+        [Fact]
         public void Key_created_with_parameterless_constructor_is_20_bytes()
         {
             var key = new Key();
-            Assert.AreEqual(20, key.Binary.Length);
+            Assert.Equal(20, key.Binary.Length);
             Assert.False(key.Binary.All(b => b == 0), "The key was not generated");
         }
     }

@@ -11,12 +11,12 @@ namespace OathNet.Test
     using System.Linq;
     using System.Text;
     using Moq;
-    using NUnit.Framework;
     using OathNet;
+    using Xunit;
 
     public class CounterBasedOtpGeneratorTests
     {
-        [Test]
+        [Fact]
         public void GenerateOtp_without_hmac_returns_SHA1_with_bytearray_key()
         {
             var keyData = new byte[]
@@ -38,7 +38,7 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 6, 9, this.GetOtpWithImplicitHMAC(key, 6, 9));
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_returns_SHA1_reference_values_with_bytearray_key()
         {
             var keyData = new byte[]
@@ -60,7 +60,7 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 6, 9, "520489");
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_test_with_Google_Authenticator_1()
         {
             var keyData = new byte[] // Base-32: 32W3532IMVWGY3ZB
@@ -84,7 +84,7 @@ namespace OathNet.Test
         {
             var otp = new CounterBasedOtpGenerator(key, digits, new SHA1HMACAlgorithm());
             var result = otp.GenerateOtp(counter);
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
     }
 }

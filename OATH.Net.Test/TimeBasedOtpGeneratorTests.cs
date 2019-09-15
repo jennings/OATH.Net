@@ -11,8 +11,8 @@ namespace OathNet.Test
     using System.Linq;
     using System.Text;
     using Moq;
-    using NUnit.Framework;
     using OathNet;
+    using Xunit;
 
     public class TimeBasedOtpGeneratorTests
     {
@@ -41,7 +41,7 @@ namespace OathNet.Test
             0x31, 0x32, 0x33, 0x34
         });
 
-        [Test]
+        [Fact]
         public void GenerateOtp_without_hmac_returns_SHA1_with_bytearray_key()
         {
             var key = Sha1ReferenceKey;
@@ -61,7 +61,7 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 8, dt, this.GetOtpWithImplicitHMAC(key, 8, dt));
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_returns_SHA1_reference_results_with_bytearray_key()
         {
             var key = Sha1ReferenceKey;
@@ -74,7 +74,7 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 8, new DateTime(2603, 10, 11, 11, 33, 20, DateTimeKind.Utc), "65353130");
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_returns_SHA256_reference_results_with_bytearray_key()
         {
             var key = Sha256ReferenceKey;
@@ -87,7 +87,7 @@ namespace OathNet.Test
             this.TestSHA256AndAssert(key, 8, new DateTime(2603, 10, 11, 11, 33, 20, DateTimeKind.Utc), "77737706");
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_returns_SHA512_reference_results_with_bytearray_key()
         {
             var key = Sha512ReferenceKey;
@@ -100,7 +100,7 @@ namespace OathNet.Test
             this.TestSHA512AndAssert(key, 8, new DateTime(2603, 10, 11, 11, 33, 20, DateTimeKind.Utc), "47863826");
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_test_with_Google_Authenticator_1()
         {
             var keyData = new byte[] // Base-32: JBSWY3DPEHPK3PXP
@@ -113,7 +113,7 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 6, new DateTime(2011, 10, 17, 7, 49, 45, DateTimeKind.Utc), "010374");
         }
 
-        [Test]
+        [Fact]
         public void GenerateOtp_test_with_Google_Authenticator_2()
         {
             var keyData = new byte[] // Base-32: 32W3532IMVWGY3ZB
@@ -126,50 +126,50 @@ namespace OathNet.Test
             this.TestSHA1AndAssert(key, 6, new DateTime(2011, 10, 17, 7, 52, 0, DateTimeKind.Utc), "139594");
         }
 
-        [Test]
+        [Fact]
         public void ValidateOtp_test_validates_within_60_second_validity_period()
         {
             var key = Sha1ReferenceKey;
             var generator = new TimeBasedOtpGenerator(key, 8);
             var currentTime = new DateTime(2009, 2, 13, 23, 31, 30, DateTimeKind.Utc);
             var sixtySeconds = TimeSpan.FromSeconds(60);
-            Assert.IsFalse(generator.ValidateOtp("89005924", currentTime.AddSeconds(-90), sixtySeconds), "90 seconds prior should be invalid");
-            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(-60), sixtySeconds), "60 seconds prior should be valid");
-            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(-15), sixtySeconds), "15 seconds prior should be valid");
-            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(+00), sixtySeconds), "The exact time should be valid");
-            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(+15), sixtySeconds), "15 seconds after should be valid");
-            Assert.IsTrue(generator.ValidateOtp("89005924", currentTime.AddSeconds(+60), sixtySeconds), "60 seconds after should be valid");
-            Assert.IsFalse(generator.ValidateOtp("89005924", currentTime.AddSeconds(+90), sixtySeconds), "90 seconds after should be invalid");
+            Assert.False(generator.ValidateOtp("89005924", currentTime.AddSeconds(-90), sixtySeconds), "90 seconds prior should be invalid");
+            Assert.True(generator.ValidateOtp("89005924", currentTime.AddSeconds(-60), sixtySeconds), "60 seconds prior should be valid");
+            Assert.True(generator.ValidateOtp("89005924", currentTime.AddSeconds(-15), sixtySeconds), "15 seconds prior should be valid");
+            Assert.True(generator.ValidateOtp("89005924", currentTime.AddSeconds(+00), sixtySeconds), "The exact time should be valid");
+            Assert.True(generator.ValidateOtp("89005924", currentTime.AddSeconds(+15), sixtySeconds), "15 seconds after should be valid");
+            Assert.True(generator.ValidateOtp("89005924", currentTime.AddSeconds(+60), sixtySeconds), "60 seconds after should be valid");
+            Assert.False(generator.ValidateOtp("89005924", currentTime.AddSeconds(+90), sixtySeconds), "90 seconds after should be invalid");
         }
 
-        [Test]
+        [Fact]
         public void ValidateOtp_test_validates_within_50_second_validity_period()
         {
             var key = Sha1ReferenceKey;
             var generator = new TimeBasedOtpGenerator(key, 8);
             var currentTime = new DateTime(2033, 5, 18, 3, 33, 20, DateTimeKind.Utc);
             var fiftySeconds = TimeSpan.FromSeconds(50);
-            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(-90), fiftySeconds), "90 seconds prior should be invalid");
-            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(-60), fiftySeconds), "60 seconds prior should be invalid");
-            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(-30), fiftySeconds), "30 seconds prior should be valid");
-            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+00), fiftySeconds), "The exact time should be valid");
-            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+30), fiftySeconds), "30 seconds after should be valid");
-            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(+60), fiftySeconds), "60 seconds after should be invalid");
-            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(+90), fiftySeconds), "90 seconds after should be invalid");
+            Assert.False(generator.ValidateOtp("69279037", currentTime.AddSeconds(-90), fiftySeconds), "90 seconds prior should be invalid");
+            Assert.False(generator.ValidateOtp("69279037", currentTime.AddSeconds(-60), fiftySeconds), "60 seconds prior should be invalid");
+            Assert.True(generator.ValidateOtp("69279037", currentTime.AddSeconds(-30), fiftySeconds), "30 seconds prior should be valid");
+            Assert.True(generator.ValidateOtp("69279037", currentTime.AddSeconds(+00), fiftySeconds), "The exact time should be valid");
+            Assert.True(generator.ValidateOtp("69279037", currentTime.AddSeconds(+30), fiftySeconds), "30 seconds after should be valid");
+            Assert.False(generator.ValidateOtp("69279037", currentTime.AddSeconds(+60), fiftySeconds), "60 seconds after should be invalid");
+            Assert.False(generator.ValidateOtp("69279037", currentTime.AddSeconds(+90), fiftySeconds), "90 seconds after should be invalid");
         }
 
-        [Test]
+        [Fact]
         public void ValidateOtp_test_validates_with_an_empty_validity_period()
         {
             var key = Sha1ReferenceKey;
             var generator = new TimeBasedOtpGenerator(key, 8);
             var currentTime = new DateTime(2033, 5, 18, 3, 33, 20, DateTimeKind.Utc);
             var zeroSeconds = TimeSpan.FromSeconds(0);
-            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(-30), zeroSeconds), "30 seconds prior should be invalid");
-            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(-01), zeroSeconds), "1 second prior should be valid (due to a 30-second precision)");
-            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+00), zeroSeconds), "The exact time should be valid");
-            Assert.IsTrue(generator.ValidateOtp("69279037", currentTime.AddSeconds(+01), zeroSeconds), "1 seconds after should be valid (due to a 30-second precision)");
-            Assert.IsFalse(generator.ValidateOtp("69279037", currentTime.AddSeconds(+30), zeroSeconds), "30 seconds after should be invalid");
+            Assert.False(generator.ValidateOtp("69279037", currentTime.AddSeconds(-30), zeroSeconds), "30 seconds prior should be invalid");
+            Assert.True(generator.ValidateOtp("69279037", currentTime.AddSeconds(-01), zeroSeconds), "1 second prior should be valid (due to a 30-second precision)");
+            Assert.True(generator.ValidateOtp("69279037", currentTime.AddSeconds(+00), zeroSeconds), "The exact time should be valid");
+            Assert.True(generator.ValidateOtp("69279037", currentTime.AddSeconds(+01), zeroSeconds), "1 seconds after should be valid (due to a 30-second precision)");
+            Assert.False(generator.ValidateOtp("69279037", currentTime.AddSeconds(+30), zeroSeconds), "30 seconds after should be invalid");
         }
 
         private string GetOtpWithImplicitHMAC(Key key, int digits, DateTime time)
@@ -182,21 +182,21 @@ namespace OathNet.Test
         {
             var otp = new TimeBasedOtpGenerator(key, digits, new SHA1HMACAlgorithm());
             var result = otp.GenerateOtp(time);
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
         private void TestSHA256AndAssert(Key key, int digits, DateTime time, string expected)
         {
             var otp = new TimeBasedOtpGenerator(key, digits, new SHA256HMACAlgorithm());
             var result = otp.GenerateOtp(time);
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
         private void TestSHA512AndAssert(Key key, int digits, DateTime time, string expected)
         {
             var otp = new TimeBasedOtpGenerator(key, digits, new SHA512HMACAlgorithm());
             var result = otp.GenerateOtp(time);
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
     }
 }
